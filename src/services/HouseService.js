@@ -7,9 +7,15 @@ class HouseService {
     return houses
   }
   async getCertainKindsOfHouses(queries) {
-    // queries.b
-    // const houses = await dbContext.Houses.countDocuments()
-    const houses = await dbContext.Houses.find(queries)
+    const arrangement = queries.sort
+    delete queries.sort
+
+
+    const allHouses = await dbContext.Houses.countDocuments()
+    // const houses = await dbContext.Houses.find(queries)
+    const houses = await dbContext.Houses
+      .find(queries)
+      .sort(arrangement) // only works if we specify to sort in get request
     return houses
   }
   async getHousebyID(requestedHouse) {
