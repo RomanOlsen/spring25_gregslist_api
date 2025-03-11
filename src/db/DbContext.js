@@ -6,7 +6,7 @@ import { HouseSchema } from '../models/House.js';
 class DbContext {
   Account = mongoose.model('Account', AccountSchema);
   Cars = mongoose.model('Car', CarSchema)
-  Houses = mongoose.model("Houses", HouseSchema)
+  Houses = mongoose.model('Houses', HouseSchema)
 }
 
 export const dbContext = new DbContext()
