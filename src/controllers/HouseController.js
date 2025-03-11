@@ -8,8 +8,18 @@ export class HouseController extends BaseController {
       .get('', this.getHouses)
       .get('/search', this.getCertainKindsOfHouses) // QUESTION why search has to be used?
       .get('/:houseID', this.getHousebyID) //dont forget the slash
+      .get('/search/SecretSearch', this.SecretSearch)
   }
 
+  async SecretSearch(request, response, next) {
+    try {
+      const houses = await houseService.getSecretSearch()
+      response.send(houses)
+    } catch (error) {
+      next(error)
+    }
+  }
+  // NOTE request, response and next is from Express
   async getCertainKindsOfHouses(request, response, next) {
     try {
       const queries = request.query
