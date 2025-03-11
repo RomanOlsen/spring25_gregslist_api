@@ -6,6 +6,16 @@ export class HouseController extends BaseController {
     super('api/houses')
     this.router
       .get('', this.getHouses)
+      .get('/:houseID', this.getHousebyID) //dont forget the slash
+  }
+  async getHousebyID(request, response, next) {
+    try {
+      const requestedHouse = request.params.houseID
+      const house = await houseService.getHousebyID(requestedHouse)
+      response.send(house)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async getHouses(request, response, next) {
