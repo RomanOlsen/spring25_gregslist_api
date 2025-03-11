@@ -1,6 +1,12 @@
 import { dbContext } from "../db/DbContext.js"
 
 class HouseService {
+  async getCertainKindsOfHouses(queries) {
+    // queries.b
+    // const houses = await dbContext.Houses.countDocuments()
+    const houses = await dbContext.Houses.find(queries)
+    return houses
+  }
   async getHousebyID(requestedHouse) {
     const foundHouse = await dbContext.Houses.findById(requestedHouse)
     return foundHouse

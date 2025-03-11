@@ -6,8 +6,20 @@ export class HouseController extends BaseController {
     super('api/houses')
     this.router
       .get('', this.getHouses)
+      .get('/search', this.getCertainKindsOfHouses) // QUESTION why search has to be used?
       .get('/:houseID', this.getHousebyID) //dont forget the slash
   }
+
+  async getCertainKindsOfHouses(request, response, next) {
+    try {
+      const queries = request.query
+      const houses = await houseService.getCertainKindsOfHouses(queries)
+      response.send(houses)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   async getHousebyID(request, response, next) {
     try {
       const requestedHouse = request.params.houseID
