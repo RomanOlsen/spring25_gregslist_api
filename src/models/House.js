@@ -1,4 +1,5 @@
-const { Schema } = require("mongoose");
+import { Schema } from "mongoose";
+
 
 export const HouseSchema = new Schema(
   {
@@ -10,11 +11,12 @@ export const HouseSchema = new Schema(
     imgUrl: { type: String, minLength: 0, maxLength: 500, required: true },
     description: { type: String, minLength: 0, maxLength: 500 },
     year: { type: Number, min: 1000, max: 2025, required: true },
-    creatorId: { type: Object }
+    //creatorId: { type: Object }
+    creatorId: { type: Schema.ObjectId, required: true, ref: 'Account' }
 
   },
-  { // creator
-    { timestamps: true, toJSON: { virtuals: true } }
+  // creator
+  { timestamps: true, toJSON: { virtuals: true } }
 
-  }
-)
+
+);
