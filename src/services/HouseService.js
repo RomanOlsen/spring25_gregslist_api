@@ -1,26 +1,34 @@
+import { request } from "express"
 import { dbContext } from "../db/DbContext.js"
 
 class HouseService {
 
   async getCertainKindsOfHouses(queries) { // bad name of function. since it could just get all houses but only with pageNumber as a query. getHousesByQuery is likely better
     const arrangement = queries.sort
+    let limitPerPage = 3
     delete queries.sort
     
     let pageNumber = queries.page
     delete queries.page
 
-    if (pageNumber == null) {
-      pageNumber = 'No page specified'
+    if (pageNumber == undefined) {
+      pageNumber = 1
+      // limitPerPage = null
     }
+
+    const skipAmount = (pageNumber - 1 ) * limitPerPage // 
     
-    const allHouses = await dbContext.Houses.countDocuments()
+    const allHouses = await dbContext.Houses.countDocuments(queries)
     const houses = await dbContext.Houses
     .find(queries)
     .sort(arrangement) // only works if we specify to sort in get request
+    .limit(limitPerPage)
+    .skip(skipAmount)
 
     const output = {
-      message: 'heres your request',
+      message: `heres your request's response`,
       page: pageNumber,
+      requestedHouseCount: allHouses,
       requestedHouses: houses,
     }
 
